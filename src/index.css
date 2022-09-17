@@ -11,3 +11,24 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.btn-outline-light,.btn-outline-primary,.btn-outline-danger,.btn-outline-success,.btn-outline-warning{
+  border: none;
+}
+
+.hide{
+  display: none;
+}
+
+.loginImg{
+  height: 390px;
+  width: 450px;
+}
+.signImg{
+ height: 600px;
+ width: 627px;
+}
+
+.ColorMode{
+  height: 30px;
+  width: 30px;
+}
