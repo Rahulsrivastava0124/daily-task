@@ -11,10 +11,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-.btn-outline-light,.btn-outline-primary,.btn-outline-danger,.btn-outline-success,.btn-outline-warning{
+.btn-outline-secondary,.btn-outline-primary,.btn-outline-danger,.btn-outline-warning,.btn-outline-info{
   border: none;
+  transition:0.5s; ;
 }
-
+.btn-outline-warning:hover{
+color: white !important;
+background: #ffc107;
+}
+.btn-outline-warning:active{
+  color: dark !important;
+  }
 .hide{
   display: none;
 }
@@ -31,4 +38,15 @@ code {
 .ColorMode{
   height: 30px;
   width: 30px;
+}
+.menu_style{
+  width: 220px;
+  height: 700px;
+}
+.menu_Active{
+  background-color: #ffc107 !important;
+  color: aliceblue !important;
+}
+.home_desk{
+  height: 700px;
 }

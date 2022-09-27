@@ -2,10 +2,10 @@ import React from "react";
 
 function Footer(props) {
   return (
-    <div className={`container rounded-4 border shadow mb-4 mt-4 bg-${props.color.bg} text-${props.color.text}`}>
-      <footer className="pt-3">
+    <div className={`   mt-4 bg-${props.color.bg} text-${props.color.text}`}>
+      <footer className="pt-3 px-5">
         <div className="row">
-          <div className="col-2">
+          <div className="col-2 ">
             <h5>Section</h5>
             <ul className="nav flex-column">
               <li className="nav-item mb-2">

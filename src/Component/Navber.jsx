@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 function Navber(props) {
   // const [btnOnClick, setBtnOnClick] = useState('');
@@ -11,91 +11,75 @@ function Navber(props) {
   
   return (
     <div
-      className={`container rounded-pill bg-${props.color.bg} d-flex flex-row justify-content-between mt-3 align-items-center`}>
+      className={` bg-${props.color.bg} d-flex flex-row justify-content-between px-2 align-items-center shadow`}>
       {/* logo image */}
       <div className=" navbar d-flex flex-row justify-content-between">
         <div className="container rounded-pill bg-warning  shadow">
-          <a className="navbar-brand pb-0 mx-0" href="/">
-            <h5>{props.UserState}</h5>
-          </a>
+          <Link className="navbar-brand pb-0 mx-0" to="/">
+            <h5>Tasks</h5>
+          </Link>
         </div>
       </div>
 
       {/* icon Lists */}
       <ul className="navbar-nav d-flex flex-row align-items-center fw-bolder">
         <li>
-          <button
-            className=" nav-item btn btn-outline-primary rounded-pill  m-2 fw-bold active shadow "
+          <Link to="/"
+            className={` nav-item btn btn-outline-warning text-${props.darkLight} rounded-pill  m-2 fw-bold active shadow `}
             onClick={active}>
             Home
-          </button>
+          </Link>
         </li>
         <li>
-          <button
-            className=" nav-item btn btn-outline-primary rounded-pill m-2 fw-bold shadow "
-            onClick={active}>
-            Daily list
-          </button>
-        </li>
-        <li>
-          <button
-            className=" nav-item btn btn-outline-primary rounded-pill m-2 fw-bold shadow"
-            onClick={active}>
-            Task
-          </button>
-        </li>
-        <li>
-          <button
-            className=" nav-item btn btn-outline-primary rounded-pill m-2 fw-bold shadow"
+          <Link to="/More"
+            className={`nav-item btn btn-outline-warning text-${props.darkLight}  rounded-pill m-2 fw-bold shadow `}
             onClick={active}>
             More
-          </button>
+          </Link>
+        </li>
+        <li>
+          <Link to="/AboutUs"
+            className={` nav-item btn btn-outline-warning text-${props.darkLight} rounded-pill m-2 fw-bold shadow`}
+            onClick={active}>
+            About us
+          </Link>
+        </li>
+        <li>
+          <Link to="/Portfolio"
+            className={` nav-item btn btn-outline-warning text-${props.darkLight} rounded-pill m-2 fw-bold shadow`}
+            onClick={active}>
+              potfolio
+          </Link>
         </li>
       </ul>
       <ul className="navbar-nav d-flex flex-row align-items-center fw-bolder">
+
+      {/* dark Mode btn */}
         <li>
           <button
             className={`nav-item btn btn-${props.darkLight} rounded-circle ColorMode  m-2 fw-bold shadow`}
-            onClick={props.colorMode_dark} name="dark"></button>
+            onClick={props.colorMode_dark}></button>
         </li>
-   
+   {/* login and SignUp btn */}
         <li>
-          <button
+          <Link to="/Login"
             className="nav-item btn btn-outline-primary rounded-pill m-2 fw-bold shadow"
             onClick={active}>
     
             Login
-          </button>
+          </Link>
         </li>
         <li>
-          <button
+          <Link to="/SignUp"
             className=" nav-item btn btn-outline-warning rounded-pill m-2 fw-bold shadow"
             onClick={active}>
         
             SignUp
-          </button>
-        </li>
-        <li className="navbar hide">
-          <a href="/" className="navbar-brand">
-            {/* <img
-              src="/logo192.png"
-              alt=""
-              width="42"
-              height="35"
-              className="border border-light rounded-circle "
-            /> */}
-            <i className="bi bi-person-circle"></i>
-          </a>
+          </Link>
         </li>
       </ul>
     </div>
   );
 }
-Navber.propTypes = {
-  UserState: PropTypes.string,
-};
 
-Navber.defaultProps = {
-  UserState: "Geast",
-};
 export default Navber;
