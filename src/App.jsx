@@ -3,7 +3,6 @@ import Navber from "./Component/Navber";
 import Footer from "./Component/Footer";
 import SignUp from "./Component/SignUp";
 import Login from "./Component/Login";
-import Home from "./Component/Home";
 import RoutinTask from "./Component/RoutinTask";
 import TodoList from "./Component/TodoList";
 import Note from "./Component/Note";
@@ -37,21 +36,13 @@ export default function App() {
       <Routes>
         <Route path="/SignUp" element={<SignUp color={color} />}></Route>
         <Route path="/Login" element={<Login color={color} />}></Route>
-        <Route
-          path="/"
-          element={
-            <Home
-              color={color}
-              menuBody={{ TaskTitle: "Task", taskHeading: "Task" }}
-            />
-          }
-        ></Route>
+       
         <Route
           path="/Home/RoutinTask"
           element={
             <RoutinTask
               color={color}
-              menuBody={{ TaskTitle: "RoutinTask", taskHeading: "RoutinTask" }}
+              menuBody={{ TaskTitle: "Routin"}}
             />
           }
         ></Route>
@@ -60,7 +51,7 @@ export default function App() {
           element={
             <TodoList
               color={color}
-              menuBody={{ TaskTitle: "TodoList", taskHeading: "TodoList" }}
+              menuBody={{ TaskTitle: "TodoList" }}
             />
           }
         ></Route>
@@ -69,7 +60,7 @@ export default function App() {
           element={
             <Note
               color={color}
-              menuBody={{ TaskTitle: "Note", taskHeading: "Note" }}
+              menuBody={{ TaskTitle: "Note" }}
             />
           }
         ></Route>

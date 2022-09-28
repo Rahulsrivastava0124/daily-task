@@ -1,6 +1,6 @@
 import React from "react";
 import Menu from "./Menu";
-import HomeTask from "./Home_task";
+import HomeTask from "./Home_inputs";
 
 export default function RoutinTask(props) {
   return (
