@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 
 export default function Home_task(props) {
-  const [routinList, setRoutinList] = useState([]);
+  let localstorage = JSON.parse(localStorage.getItem("RoutinTask"));
+
+  const [routinList, setRoutinList] = useState(
+    localstorage !== null ? localstorage : ["rahul", "kumar"]
+  );
   const [add, setAdd] = useState(["add"]);
+  const [update, setupdate] = useState("");
+  console.log(routinList);
 
   const handelAdd = () => {
     console.log("add");
@@ -13,6 +19,19 @@ export default function Home_task(props) {
     let newAdd = add.slice(1);
     setAdd(newAdd);
     console.log(add);
+  };
+
+  const saveHandel = () => {
+    let myarr = [];
+    myarr.push(document.getElementById("routinTitle").value);
+    for (let index = 0; index < add.length; index++) {
+      myarr.push(document.getElementById(`routin${index}`).value);
+    }
+    routinList.push(myarr);
+    setRoutinList(routinList);
+    let RotinString = JSON.stringify(routinList);
+    localStorage.setItem("RoutinTask", `${RotinString}`);
+    setupdate("hello rahul");
   };
   // body
   return (
@@ -77,7 +96,7 @@ export default function Home_task(props) {
                       <input
                         type="text"
                         className="form-control"
-                        id="exampleFormControlTask1"
+                        id="routinTitle"
                         placeholder="Write a book"
                       />
                       <label
@@ -92,7 +111,7 @@ export default function Home_task(props) {
                             <input
                               type="text"
                               className="form-control my-1"
-                              id="exampleFormControlTask2"
+                              id={`routin${index}`}
                               placeholder="Write a book"
                             />
                             {add.length !== 1 && (
@@ -123,7 +142,12 @@ export default function Home_task(props) {
                       >
                         Close
                       </button>
-                      <button type="button" className="btn btn-primary">
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        data-bs-dismiss="modal"
+                        onClick={saveHandel}
+                      >
                         Save
                       </button>
                     </div>
@@ -150,12 +174,34 @@ export default function Home_task(props) {
                       >
                         Todo List
                       </label>
-                      <input
-                        type="text"
-                        className="form-control my-1"
-                        id="exampleFormControlTask2"
-                        placeholder="Write a book"
-                      />
+                      {add.map((element, index) => {
+                        return (
+                          <div key={index}>
+                            <input
+                              type="text"
+                              className="form-control my-1"
+                              id="exampleFormControlTask2"
+                              placeholder="Write a book"
+                            />
+                            {add.length !== 1 && (
+                              <button
+                                className="btn btn-sm btn-danger"
+                                onClick={() => handelRemove(index)}
+                              >
+                                Remove
+                              </button>
+                            )}
+                            {add.length - 1 === index && (
+                              <button
+                                className="btn btn-sm btn-primary"
+                                onClick={() => handelAdd(index)}
+                              >
+                                Add
+                              </button>
+                            )}
+                          </div>
+                        );
+                      })}
                     </div>
                     <div className="modal-footer">
                       <button
@@ -207,6 +253,47 @@ export default function Home_task(props) {
             </div>
           </div>
         </div>
+
+        <h1>{props.menuBody.TaskTitle}</h1>
+        {props.menuBody.TaskTitle === "Routin" ? (
+          <>
+            <div className="row row-cols-1 row-cols-md-3 g-4">
+              {routinList.map((element, index) => {
+                console.log(element);
+                return (
+                  <div className={update} key={index}>
+                    <div
+                      className="card border-primary mb-3"
+                      style={{ maxWidth: "18rem", height: "238px" }} 
+                    >
+                      <div className="card-header text-warning">
+                        {element[0]}
+                      </div>
+                      <div
+                        className="card-body text-primary"
+                        style={{ overflow: "auto" }}
+                      >
+                        <ul className="list-group list-group-flush">
+                          {element.map((element, index) => {
+                            return (
+                              <li
+                                key={index}
+                                className="list-group-item"
+                                style={index === 0 ? { display: "none" } : null}
+                              >
+                                {element}
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </>
+        ) : null}
       </div>
     </>
   );
