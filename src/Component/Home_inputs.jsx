@@ -1,27 +1,36 @@
 import React, { useState } from "react";
 
 export default function Home_task(props) {
-  let localstorage = JSON.parse(localStorage.getItem("RoutinTask"));
-
+  //Routin data State
+  let routinstorage = JSON.parse(localStorage.getItem("RoutinTask"));
   const [routinList, setRoutinList] = useState(
-    localstorage !== null ? localstorage : ["rahul", "kumar"]
+    routinstorage !== null ? routinstorage : [["rahul", "kumar"]]
   );
+
+  //Todo data State
+  let todostorage = JSON.parse(localStorage.getItem("TodoTask"));
+  const [TodoList, setTodoList] = useState(
+    todostorage !== null ? todostorage : [["rahul", "kumar"]]
+  );
+  console.log(TodoList);
+
   const [add, setAdd] = useState(["add"]);
   const [update, setupdate] = useState("");
-  console.log(routinList);
 
+  //handel input add
   const handelAdd = () => {
-    console.log("add");
     setAdd([...add, "add"]);
   };
+
+  //handel input remove
   const handelRemove = (index) => {
-    console.log("remove");
     let newAdd = add.slice(1);
     setAdd(newAdd);
-    console.log(add);
   };
 
-  const saveHandel = () => {
+  //save the in local host and Show The data in card form in Container
+  //Routin Task Save Function
+  const saveHandelRoutin = () => {
     let myarr = [];
     myarr.push(document.getElementById("routinTitle").value);
     for (let index = 0; index < add.length; index++) {
@@ -31,6 +40,20 @@ export default function Home_task(props) {
     setRoutinList(routinList);
     let RotinString = JSON.stringify(routinList);
     localStorage.setItem("RoutinTask", `${RotinString}`);
+    setupdate("hello rahul");
+  };
+
+  //Todo Task Save Function
+  const saveHandelTodo = () => {
+    let myarr = [];
+    myarr.push(document.getElementById("todoTitle").value);
+    for (let index = 0; index < add.length; index++) {
+      myarr.push(document.getElementById(`Todo${index}`).value);
+    }
+    TodoList.push(myarr);
+    setTodoList(TodoList);
+    let RotinString = JSON.stringify(TodoList);
+    localStorage.setItem("TodoTask", `${RotinString}`);
     setupdate("hello rahul");
   };
   // body
@@ -85,7 +108,7 @@ export default function Home_task(props) {
                 {//routinTask
                 props.menuBody.TaskTitle === "Routin" ? (
                   <>
-                    <div className="mb-3">
+                    <div className=" mb-3">
                       <label
                         htmlFor="exampleFormControlTask1"
                         className="form-label"
@@ -107,27 +130,32 @@ export default function Home_task(props) {
                       </label>
                       {add.map((element, index) => {
                         return (
-                          <div key={index}>
+                          <div key={index} className="input-group mb-3">
+                            <span className="input-group-text">
+                              {index + 1}
+                            </span>
                             <input
                               type="text"
-                              className="form-control my-1"
+                              className="form-control "
                               id={`routin${index}`}
                               placeholder="Write a book"
+                              aria-label="Amount (to the nearest dollar)"
                             />
+
                             {add.length !== 1 && (
                               <button
                                 className="btn btn-sm btn-danger"
                                 onClick={() => handelRemove(index)}
                               >
-                                Remove
+                                <i className="bi bi-trash"></i>
                               </button>
                             )}
                             {add.length - 1 === index && (
                               <button
-                                className="btn btn-sm btn-primary"
+                                className="btn btn-sm btn-primary mx-1 "
                                 onClick={() => handelAdd(index)}
                               >
-                                Add
+                                <i className="bi bi-plus-lg"></i>
                               </button>
                             )}
                           </div>
@@ -146,7 +174,7 @@ export default function Home_task(props) {
                         type="button"
                         className="btn btn-primary"
                         data-bs-dismiss="modal"
-                        onClick={saveHandel}
+                        onClick={saveHandelRoutin}
                       >
                         Save
                       </button>
@@ -165,7 +193,7 @@ export default function Home_task(props) {
                       <input
                         type="text"
                         className="form-control"
-                        id="exampleFormControlTask1"
+                        id="todoTitle"
                         placeholder="Write a book"
                       />
                       <label
@@ -176,11 +204,15 @@ export default function Home_task(props) {
                       </label>
                       {add.map((element, index) => {
                         return (
-                          <div key={index}>
+                          <div key={index} className="input-group mb-3">
+                            <span className="input-group-text">
+                              {index + 1}
+                            </span>
+
                             <input
                               type="text"
-                              className="form-control my-1"
-                              id="exampleFormControlTask2"
+                              className="form-control "
+                              id={`Todo${index}`}
                               placeholder="Write a book"
                             />
                             {add.length !== 1 && (
@@ -188,15 +220,15 @@ export default function Home_task(props) {
                                 className="btn btn-sm btn-danger"
                                 onClick={() => handelRemove(index)}
                               >
-                                Remove
+                                <i className="bi bi-trash"></i>
                               </button>
                             )}
                             {add.length - 1 === index && (
                               <button
-                                className="btn btn-sm btn-primary"
+                                className="btn btn-sm btn-primary mx-1"
                                 onClick={() => handelAdd(index)}
                               >
-                                Add
+                                <i className="bi bi-plus-lg"></i>
                               </button>
                             )}
                           </div>
@@ -211,7 +243,12 @@ export default function Home_task(props) {
                       >
                         Close
                       </button>
-                      <button type="button" className="btn btn-primary">
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        data-bs-dismiss="modal"
+                        onClick={saveHandelTodo}
+                      >
                         Save
                       </button>
                     </div>
@@ -253,46 +290,122 @@ export default function Home_task(props) {
             </div>
           </div>
         </div>
-
+{/* menu Output body Container */}
         <h1>{props.menuBody.TaskTitle}</h1>
         {props.menuBody.TaskTitle === "Routin" ? (
-          <>
-            <div className="row row-cols-1 row-cols-md-3 g-4">
-              {routinList.map((element, index) => {
-                console.log(element);
-                return (
-                  <div className={update} key={index}>
-                    <div
-                      className="card border-primary mb-3"
-                      style={{ maxWidth: "18rem", height: "238px" }} 
-                    >
-                      <div className="card-header text-warning">
-                        {element[0]}
-                      </div>
+          <div
+            className="container"
+            style={{
+              overflow: "auto",
+            }}
+          >
+            <div className="row row-cols-1 row-cols-md-4 g-3">
+              {routinList.length !== 1 ? (
+                routinList.map((element, index) => {
+                  return (
+                    <div className={update} key={index}>
                       <div
-                        className="card-body text-primary"
-                        style={{ overflow: "auto" }}
+                        className="card border mb-3"
+                        style={{
+                          maxWidth: "18rem",
+                          height: "238px",
+                        }}
                       >
-                        <ul className="list-group list-group-flush">
-                          {element.map((element, index) => {
-                            return (
-                              <li
-                                key={index}
-                                className="list-group-item"
-                                style={index === 0 ? { display: "none" } : null}
-                              >
-                                {element}
-                              </li>
-                            );
-                          })}
-                        </ul>
+                        <div className="card-header bg-warning">
+                          {element[0]}
+                        </div>
+                        <div
+                          className="card-body text-primary"
+                          style={{
+                            overflow: "auto",
+                          }}
+                        >
+                          <ul className="list-group list-group-flush">
+                            {element.map((element, index) => {
+                              return (
+                                <li
+                                  key={index}
+                                  className="list-group-item"
+                                  style={
+                                    index === 0
+                                      ? {
+                                          display: "none",
+                                        }
+                                      : null
+                                  }
+                                >
+                                  {element}
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })
+              ) : (
+                <h1> please create a Routin</h1>
+              )}
             </div>
-          </>
+          </div>
+        ) : props.menuBody.TaskTitle === "TodoList" ? (
+          <div
+            className="container"
+            style={{
+              overflow: "auto",
+            }}
+          >
+            <div className="row row-cols-1 row-cols-md-4 g-3">
+              {TodoList.length !== 1 ? (
+                TodoList.map((element, index) => {
+                  return (
+                    <div className={update} key={index}>
+                      <div
+                        className="card border mb-3"
+                        style={{
+                          maxWidth: "18rem",
+                          height: "238px",
+                        }}
+                      >
+                        <div className="card-header bg-warning">
+                          {element[0]}
+                        </div>
+                        <div
+                          className="card-body text-primary"
+                          style={{
+                            overflow: "auto",
+                          }}
+                        >
+                          <ul className="list-group list-group-flush">
+                            {element.map((element, index) => {
+                              return (
+                                <li
+                                  key={index}
+                                  className="list-group-item"
+                                  style={
+                                    index === 0
+                                      ? {
+                                          display: "none",
+                                        }
+                                      : null
+                                  }
+                                >
+                                  {element}
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <h1> please create a TodoList</h1>
+              )}
+            </div>
+          </div>
         ) : null}
       </div>
     </>

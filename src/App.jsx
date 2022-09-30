@@ -38,7 +38,7 @@ export default function App() {
         <Route path="/Login" element={<Login color={color} />}></Route>
        
         <Route
-          path="/Home/RoutinTask"
+          path="/"
           element={
             <RoutinTask
               color={color}

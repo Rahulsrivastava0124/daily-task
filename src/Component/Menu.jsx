@@ -12,7 +12,7 @@ export default function Menu(props) {
       <ul className="nav nav-pills flex-column mb-auto">
         <li>
           <Link
-            to="/Home/RoutinTask"
+            to="/"
             className={`nav-link fw-bold btn btn-outline-warning my-1 text-${props.color.text} text-start`}
           >
             Routin Task

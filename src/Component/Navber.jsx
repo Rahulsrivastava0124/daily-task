@@ -16,7 +16,7 @@ function Navber(props) {
       {/* logo image */}
       <div className=" navbar d-flex flex-row justify-content-between">
         <div className="container rounded-pill bg-warning  shadow">
-          <Link className="navbar-brand pb-0 mx-0" to="/Home/RoutinTask">
+          <Link className="navbar-brand pb-0 mx-0" to="/">
             <h5>Tasks</h5>
           </Link>
         </div>
