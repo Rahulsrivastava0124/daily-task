@@ -12,7 +12,61 @@ export default function Home_task(props) {
   const [TodoList, setTodoList] = useState(
     todostorage !== null ? todostorage : [["rahul", "kumar"]]
   );
+  const [AddTodolistNoInCard, setAddTodolistNoInCard] = useState(0);
+  const [AddTodolistvalueInCard, setAddTodolistvalueInCard] = useState("value");
   const [TodoEditList, setTodoEditList] = useState([0, 0]);
+  const CardColor = [
+    "#FF6633",
+    "#FFB399",
+    "#FF33FF",
+    "#FFFF99",
+    "#00B3E6",
+    "#E6B333",
+    "#3366E6",
+    "#999966",
+    "#99FF99",
+    "#B34D4D",
+    "#80B300",
+    "#809900",
+    "#E6B3B3",
+    "#6680B3",
+    "#66991A",
+    "#FF99E6",
+    "#CCFF1A",
+    "#FF1A66",
+    "#E6331A",
+    "#33FFCC",
+    "#66994D",
+    "#B366CC",
+    "#4D8000",
+    "#B33300",
+    "#CC80CC",
+    "#66664D",
+    "#991AFF",
+    "#E666FF",
+    "#4DB3FF",
+    "#1AB399",
+    "#E666B3",
+    "#33991A",
+    "#CC9999",
+    "#B3B31A",
+    "#00E680",
+    "#4D8066",
+    "#809980",
+    "#E6FF80",
+    "#1AFF33",
+    "#999933",
+    "#FF3380",
+    "#CCCC00",
+    "#66E64D",
+    "#4D80CC",
+    "#9900B3",
+    "#E64D66",
+    "#4DB380",
+    "#FF4D4D",
+    "#99E6E6",
+    "#6666FF",
+  ];
   const [add, setAdd] = useState(["add"]);
   const [update, setupdate] = useState("");
 
@@ -68,10 +122,12 @@ export default function Home_task(props) {
   const saveHandelTodo = () => {
     let myarr = [];
     myarr.push(document.getElementById("todoTitle").value);
+
     for (let index = 0; index < add.length; index++) {
       myarr.push(document.getElementById(`Todo${index}`).value);
     }
     TodoList.push(myarr);
+    myarr.push(new Date().toDateString());
     setTodoList(TodoList);
     let RotinString = JSON.stringify(TodoList);
     localStorage.setItem("TodoTask", `${RotinString}`);
@@ -116,9 +172,10 @@ export default function Home_task(props) {
     }
   };
   //Edit_list function
-  const [ChangeEditList, setChangeEditList] = useState(
-    TodoList[TodoEditList[0]][TodoEditList[1]]
-  );
+  let ChangeList =
+    TodoList === null ? TodoList[TodoEditList[0]][TodoEditList[1]] : "issue";
+
+  const [ChangeEditList, setChangeEditList] = useState(ChangeList);
   const EditTodofun = (e, index, Todoindex) => {
     setTodoEditList([Todoindex, index]);
     setChangeEditList(TodoList[Todoindex][index]);
@@ -128,17 +185,25 @@ export default function Home_task(props) {
   const EditTodoList = (e) => {
     let Edit_input_value = document.getElementById("Edit_input_value").value;
     let data = TodoList;
-    let Edit_Data = (data[TodoEditList[0]][
-      TodoEditList[1]
-    ] = Edit_input_value);
-    setTodoList(data);
-    localStorage.setItem("TodoTask",JSON.stringify(data))
-    setupdate("All Edited ")
+    let Edit_Data = (data[TodoEditList[0]][TodoEditList[1]] = Edit_input_value);
+    localStorage.setItem("TodoTask", JSON.stringify(data));
+    setupdate("All Edited ");
   };
-  //Edit_onChange Value
-
+  // Todo Edit_onChange Value
   const Change_EditTodoList = (e) => {
     setChangeEditList(e.target.value);
+  };
+
+  // Todo Add Card list Item Function
+  const SaveAddCardList = (e) => {
+    let DataValue = TodoList;
+    DataValue[AddTodolistNoInCard].splice(
+      DataValue[AddTodolistNoInCard].length - 1,
+      0,
+      AddTodolistvalueInCard
+    );
+    localStorage.setItem("TodoTask", JSON.stringify(DataValue));
+    setupdate(" new list set");
   };
   // body
   return (
@@ -165,19 +230,21 @@ export default function Home_task(props) {
                         className="card border mb-3"
                         style={{
                           maxWidth: "18rem",
-                          height: "238px",
+                          height: "260px",
                         }}
                       >
-                        <div className="card-header bg-warning d-flex px-2 py-1 justify-content-between align-items-center">
+                        <div
+                          className={`card-header bg-${
+                            CardColor[Math.floor(Math.random() * 6)]
+                          } text-black d-flex px-2 py-1 justify-content-between align-items-center`}
+                        >
                           <span className="badge bg-secondary ">
                             {routinindex + 1}
                           </span>
 
-                          <div className="text-muted fw-bold fs-5 ">
-                            {element[0]}{" "}
-                          </div>
+                          <div className="fw-bold fs-5 ">{element[0]} </div>
                           <button
-                            className="btn btn-danger btn-sm"
+                            className="btn "
                             onClick={() => {
                               RoutinDeleteCard(routinindex);
                             }}
@@ -232,23 +299,29 @@ export default function Home_task(props) {
           >
             <div className="row row-cols-1 row-cols-md-3 g-3">
               {TodoList.length !== 0 ? (
-                TodoList.map((element, Todoindex) => {
+                TodoList.map((Todoelement, Todoindex) => {
                   return (
                     <div className={update} key={Todoindex}>
                       <div
                         className="card border mb-3"
                         style={{
                           maxWidth: "24rem",
-                          height: "238px",
+                          height: "280px",
                         }}
                       >
-                        <div className="card-header bg-warning d-flex px-2 py-1 justify-content-between  align-items-center">
+                        <div
+                          className="card-header  text-black d-flex px-2 py-1 justify-content-between align-items-center"
+                          style={{ backgroundColor: `${CardColor[Todoindex]}` }}
+                        >
                           <span className="badge bg-secondary">
                             {Todoindex + 1}
                           </span>
-                          <h5> {element[0]}</h5>
+                          <h5> {Todoelement[0]}</h5>
                           <button
-                            className="btn btn-sm btn-danger"
+                            className="btn"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            title="Edit List"
                             onClick={() => {
                               TodoDeleteCard(Todoindex);
                             }}
@@ -264,12 +337,14 @@ export default function Home_task(props) {
                           }}
                         >
                           <ul className="list-group list-group-flush">
-                            {element.map((element, index) => {
+                            {Todoelement.map((element, index) => {
                               return (
                                 <li
                                   key={index}
                                   className={`list-group-item rounded-2 mt-1 ${
                                     index === 0
+                                      ? ` hide `
+                                      : index === Todoelement.length - 1
                                       ? ` hide `
                                       : `d-flex justify-content-between`
                                   }`}
@@ -283,6 +358,9 @@ export default function Home_task(props) {
                                         className="form-check-input me-2 border rounded-4 p-2"
                                         id={`checked${index}`}
                                         type="checkbox"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="TodoList completed or not"
                                         onClick={(e) => {
                                           todoList_status(e, index, Todoindex);
                                         }}
@@ -296,18 +374,47 @@ export default function Home_task(props) {
                                       type="button"
                                       className="btn p-0 "
                                       data-bs-toggle="modal"
-                                      data-bs-target="#Edit_list_Modal"
+                                      data-bs-target="#Edit_list_Modal "
+                                      data-bs-placement="top"
+                                      title="Edit List value"
                                       onClick={(e) => {
                                         EditTodofun(e, index, Todoindex);
                                       }}
                                     >
-                                      <i className="bi bi-pencil-square"></i>
+                                      <i className="bi bi-pencil-square text-danger"></i>
                                     </button>
+                                    
                                   </div>
                                 </li>
                               );
                             })}
                           </ul>
+                        </div>
+                        <div
+                          className="card-footer d-flex align-items-center justify-content-between"
+                          style={{ backgroundColor: `${CardColor[Todoindex]}` }}
+                        >
+                          <small className="text-muted fw-bold">
+                            {Todoelement[Todoelement.length - 1]}
+                          </small>
+                          <button
+                            type="button"
+                            className="btn p-0"
+                            data-bs-toggle="modal"
+                            data-bs-target="#card_list_Add_Model"
+                            onClick={(e) => setAddTodolistNoInCard(Todoindex)}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="22"
+                              height="22"
+                              fill="currentColor"
+                              className="bi bi-plus-square-fill"
+                              viewBox="0 0 16 16"
+                            >
+                              <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
+                            </svg>
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -572,45 +679,95 @@ export default function Home_task(props) {
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog">
+        <div className="modal-dialog modal-lg">
           <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
-                Modal title
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body" id={update}>
+            <div className=" d-flex " id={update}>
               <input
-                className="form-control"
+                className="form-control m-3"
                 id="Edit_input_value"
                 type="text"
                 value={ChangeEditList}
                 aria-label="default input example"
                 onChange={(e) => Change_EditTodoList(e)}
               />
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary btn-sm"
+                  data-bs-dismiss="modal"
+                >
+                  <i className="bi bi-x-lg">Close</i>
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary btn-sm"
+                  data-bs-dismiss="modal"
+                  onClick={(e) => EditTodoList(e)}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="bi bi-check2-all"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l7-7zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0z"></path>
+                    <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708z"></path>
+                  </svg>
+                  Save
+                </button>
+              </div>
             </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary"
-                data-bs-dismiss="modal"
-                onClick={(e) => EditTodoList(e)}
-              >
-                Save changes
-              </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        className="modal fade"
+        id="card_list_Add_Model"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-lg">
+          <div className="modal-content">
+            <div className=" d-flex " id={update}>
+              <input
+                className="form-control m-3"
+                id="Edit_input_value"
+                type="text"
+                aria-label="default input example"
+                onChange={(e) => setAddTodolistvalueInCard(e.target.value)}
+              />
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary btn-sm"
+                  data-bs-dismiss="modal"
+                >
+                  <i className="bi bi-x-lg">Close</i>
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary btn-sm"
+                  data-bs-dismiss="modal"
+                  onClick={SaveAddCardList}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="bi bi-check2-all"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l7-7zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0z"></path>
+                    <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708z"></path>
+                  </svg>
+                  Save
+                </button>
+              </div>
             </div>
           </div>
         </div>
