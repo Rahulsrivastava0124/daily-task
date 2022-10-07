@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function Menu(props) {
   return (
     <div
-      className={`d-flex flex-column flex-shrink-0 p-3 bg-${props.color.bg} text-${props.color.text} menu_style  rounded-3 mt-3 shadow`}
+      className={`d-flex flex-column flex-shrink-0 p-3 bg-${props.color.bg} text-${props.color.text} menu_style mx-1 rounded-3 mt-2 shadow`}
     >
       <span className="fs-4">Menu</span>
 
@@ -32,14 +32,6 @@ export default function Menu(props) {
             className={`nav-link fw-bold btn btn-outline-warning my-1 text-${props.color.text} text-start`}
           >
             Note
-          </Link>
-        </li>
-        <li>
-          <Link
-            className={`nav-link fw-bold btn btn-outline-warning my-1 text-${props.color.text} text-start`}
-            to="/Home/Setting "
-          >
-            Setting
           </Link>
         </li>
       </ul>

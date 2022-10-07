@@ -7,7 +7,7 @@ export default function Note(props) {
     <div>
       <div className="d-flex flex-row ">
         <Menu color={props.color} text={props.darkLight} />
-        <HomeTask menuBody={props.menuBody} />
+        <HomeTask color={props.color} menuBody={props.menuBody} />
       </div>
     </div>
   );

@@ -41,14 +41,14 @@ background: #ffc107;
 }
 .menu_style{
   width: 220px;
-  height: 700px;
+  height: 722px;
 }
 .menu_Active{
   background-color: #ffc107 !important;
   color: aliceblue !important;
 }
 .home_desk{
-  height: 700px;
+  height: 722px;
   overflow: auto;
 }
 

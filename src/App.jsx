@@ -6,11 +6,11 @@ import Login from "./Component/Login";
 import RoutinTask from "./Component/RoutinTask";
 import TodoList from "./Component/TodoList";
 import Note from "./Component/Note";
-import Setting from "./Component/Setting";
 import More from "./Component/More";
 import AboutUs from "./Component/AboutUs";
 import Portfolio from "./Component/Portfolio";
 import { Routes, Route } from "react-router-dom";
+
 
 export default function App() {
   const [darkLight, setdarkLight] = useState("dark");
@@ -42,7 +42,7 @@ export default function App() {
           element={
             <RoutinTask
               color={color}
-              menuBody={{ TaskTitle: "Routin"}}
+              menuBody={{ TaskTitle: "Routine"}}
             />
           }
         ></Route>
@@ -64,12 +64,7 @@ export default function App() {
             />
           }
         ></Route>
-        <Route
-          path="/Home/Setting"
-          element={
-            <Setting color={color} menuBody={{ TaskTitle: "Setting" }} />
-          }
-        ></Route>
+       
         <Route path="/AboutUs" element={<AboutUs />}></Route>
         <Route path="/More" element={<More />}></Route>
         <Route path="/Portfolio" element={<Portfolio />}></Route>

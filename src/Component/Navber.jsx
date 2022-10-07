@@ -11,7 +11,7 @@ function Navber(props) {
   
   return (
     <div
-      className={` bg-${props.color.bg} d-flex flex-row justify-content-between px-2 align-items-center shadow`}
+      className={` bg-${props.color.bg} d-flex flex-row justify-content-between mx-1 rounded px-2 align-items-center shadow`}
     >
       {/* logo image */}
       <div className=" navbar d-flex flex-row justify-content-between">
